@@ -40,9 +40,8 @@ sudo chkconfig mysql on
 sudo service mysql start
 
 MYSQL_ROOT_PASSWORD=`sudo cat /root/.mysql_secret | sed -e "s/^.*: \(.*\).*$/\1/"`
-mysql -u root -p${MYSQL_ROOT_PASSWORD} -e 'show databases;'
+mysql -u root -p${MYSQL_ROOT_PASSWORD} --connect-expired-password -e "SET PASSWORD FOR root@localhost=PASSWORD('');"
 if [ "$?" -eq 0 ]; then
-  mysql -u root -p${MYSQL_ROOT_PASSWORD} --connect-expired-password -e "SET PASSWORD FOR root@localhost=PASSWORD('');"
   mysql -u root -e "SET PASSWORD FOR root@'127.0.0.1'=PASSWORD('');"
   mysql -u root -e "DELETE FROM mysql.user WHERE User='';"
   mysql -u root -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1');"
