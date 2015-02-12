@@ -116,7 +116,7 @@ LIBEVENT_VERSION='2.0'
 LIBEVENT_FULL_VERSION="${LIBEVENT_VERSION}.21"
 TMUX_VERSION='1.9'
 
-if [ ! type tmux >/dev/null 2>&1 ]; then
+if ! type tmux > /dev/null 2>&1; then
   sudo yum remove libevent libevent-devel libevent-headers
   cd /usr/local/src
   sudo wget -q https://github.com/downloads/libevent/libevent/libevent-${LIBEVENT_FULL_VERSION}-stable.tar.gz
